@@ -1,0 +1,233 @@
+Exercícios da atividade 14 - Recursão - páginas 9 até 11
+
+Letra A
+
+#include <iostream>
+using namespace std;
+
+int soma (int n){
+    if (n == 1){
+        return n;
+    } else {
+        return n + soma (n - 1); 
+    }
+    
+}
+
+int main(){
+    int numero = 0;
+    cin >> numero;
+    
+    cout << soma (numero);
+    
+    return 0;
+}
+
+
+Letra B
+
+#include <iostream>
+using namespace std;
+
+int potencia (int x, int y){
+    if (y == 1){
+        return x;
+    } else {
+        return x * potencia (x, y - 1); 
+    }
+}
+
+int main(){
+    int base = 0, expoente = 0;
+    cin >> base >> expoente;
+    
+    cout << potencia (base, expoente);
+    
+    return 0;
+}
+
+
+Letra C
+
+A função recebe um vetor como um parâmetro e retorna a soma de todos os elementos maiores que 10. O programa verifica se há um elemento do vetor maior que 10 (x [n-1] > 10) e inicia uma soma de elementos por recursão (x [n-1] + teste (x, n-1)). Caso o elemento não seja maior que 10, a recursão continua, mas o elemento da chamada em questão não é adicionado à soma. O caso base é quando o índice é zerado (n = 0), pois quando esse valor é alcançado o vetor foi completamente percorrido. 
+
+A recursão é linear, pois a ordem de crescimento é linear já que cada função faz apenas uma única chamada. Há uma única condição de parada.
+
+
+Letra D
+
+A função recebe um valor inteiro e verifica se ele é menor que 10 (n < 10). Caso seja, há o retorno do valor para o local de chamada da função. Do contrário, ele soma o resto da divisão desse número por 10 (n % 10) com uma nova chamada da função (iniciando a recursão), a qual fornece o quociente da divisão do número por 10 (n / 10) como argumento da próxima chamada.
+
+n = 4532; 2 + 12 = 14
+n = 453; 3 + 9 = 12
+n = 45; 5 + 4 = 9
+n = 4 
+
+O retorno para a chamada de teste2(4532) é 14, com as chamadas recursivas ocorrendo três vezes.
+
+
+Letra E
+
+#include <iostream>
+using namespace std;
+
+int max (int *v, int n){
+    if (n == 1){
+        return v[0];
+    } else {
+        cout << "teste" << " " << n << endl;
+        int x = max (v, n - 1);
+        cout << x << " " << n << " " << v [n - 1] << endl;
+        if (x > v [n - 1]){
+            cout << "caso1" << " " << x << endl;
+            return x;
+        } else {
+            cout << "caso2" << " " << v [n - 1] << endl;            
+            return v [n - 1];
+        }
+    }
+}
+
+int main(){
+    int n = 4, v[] = {2, 7, 4, 7, 3};
+   
+    cout << max (v, n);
+    return 0;
+}
+
+A linha "int x = max (v, n - 1)" realiza chamadas recursivas da função "max" até que o índice "n" seja igual a 1, momento no qual há o retorno do valor do primeiro elemento do vetor (v [0]) para "max (v, 2)". Note que o retorno será v[0] = 2.
+
+Na chamada de "max (v, 2)", a comparação será falsa, pois 2 não é maior que 7. Isso levará ao retorno do valor "v [n - 1]" (que é o primeiro 7) para "max (v, 3)", o qual é atribuído a "x" de "max (v, 3)".
+
+Na chamada de "max (v, 3)", a comparação será verdadeira, pois 7 é maior que 4. Isso levará ao retorno do valor "x" (que é 7 em max (v,3)) para "max (v, 4)", o qual é atribuído a "x" de "max (v, 4)".
+
+Na chamada de "max (v, 4)" (chamada original), a comparação será falsa pois 7 não é maior que 7. Isso levará ao retorno do valor "v [n - 1]" (que é o segundo "7" do vetor) para "main".
+
+
+Letra F
+
+#include <iostream>
+#include <string>
+#include <iomanip> 
+#include <cmath>
+using namespace std;
+
+int desenhar_regua_recursiva(int inicio, int fim, int comprimento_traco, int largura_pos) {
+    if (comprimento_traco > 0) {
+        int meio = (inicio + fim) / 2;
+
+        desenhar_regua_recursiva(inicio, meio, comprimento_traco - 1, largura_pos);
+
+        string traco_str(comprimento_traco, '-');
+        cout << "Posição " << setw(largura_pos) << right << meio << ": " << traco_str << endl;
+
+        desenhar_regua_recursiva(meio, fim, comprimento_traco - 1, largura_pos);
+    }
+    return 0;
+}
+
+int imprimir_regua(int n) {
+    if (n < 0) {
+        cout << "A ordem 'n' deve ser não-negativa." << endl;
+        return 0;
+    }
+
+    int pos_final = pow (2, n);
+
+    int largura_max_pos = to_string(pos_final).length();
+
+    cout << "Régua de Ordem " << n << endl;
+
+    if (n == 0) {
+        cout << "Posição " << setw(largura_max_pos) << right << 0 << ": " << endl;
+        cout << "Posição " << setw(largura_max_pos) << right << pos_final << ": " << endl;
+    } else {
+        cout << "Posição " << setw(largura_max_pos) << right << 0 << ": " << endl;
+
+        desenhar_regua_recursiva(0, pos_final, n, largura_max_pos);
+
+        cout << "Posição " << setw(largura_max_pos) << right << pos_final << ": " << endl;
+    }
+
+    return 0;
+}
+
+int main() {
+    int n = 0;
+    
+    cout << "Digite a ordem da régua: ";
+    cin >> n;
+    
+    imprimir_regua(n);
+
+    return 0;
+}
+
+Observação: Note que o intervalo [0..2^n] significa que o número de impressões será sempre ímpar.
+
+
+Letra G
+
+#include <iostream>
+using namespace std;
+
+int multiplicacao (int m, int n){
+    int total = 0;
+    
+    if (n == 0){
+        return 0;
+    } else {
+        return total = m + multiplicacao (m, n - 1);
+    }
+
+    return total;
+}
+
+int main(){
+    int multiplicando = 0, multiplicador = 0;
+    
+    cin >> multiplicando >> multiplicador;
+    
+    cout << multiplicacao (multiplicando, multiplicador) << endl;
+
+    return 0;
+}
+
+
+Letra H
+
+int func (int n){
+	if (n == 0){
+		return 0;
+	} else {
+		return n + func (n - 1);
+	}
+} 
+
+A função recursiva acima realiza um somatório, retornando o valor de "n" somado a todos os inteiros de "n - 1" até zero. Abaixo está uma versão iterativa:
+
+#include <iostream>
+using namespace std;
+
+int somatorio (int n){
+    int i = 0, total = 0, auxiliar = 0;
+    
+    auxiliar = n;
+    
+    for (i = auxiliar; i > 0; i--){
+        total += n;
+        n--;
+    }
+    
+    return total;
+} 
+
+int main(){
+    int x = 0;
+    
+    cin >> x;
+    
+    cout << somatorio (x) << endl;
+
+    return 0;
+}
